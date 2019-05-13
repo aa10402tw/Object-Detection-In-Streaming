@@ -1,0 +1,95 @@
+<script src="https://cdn.dashjs.org/latest/dash.all.min.js"></script>
+
+<style>
+	#myVideo{
+		width: 640px;
+		height: auto;
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
+	#myCanvas{
+		position: absolute;
+		top: 0;
+		left: 0;
+		z-index: 10;
+	}
+	#chooseObj{
+		position: relative;
+		top: 100;
+		left: 700;
+		float: left;
+	}
+</style>
+
+<body>
+<div id="videoContainer">
+	<canvas id="myCanvas" width="640" height="300" ></canvas>
+	<video id="myVideo"   type="application/dash+xml" controls></video>
+</div>
+<div style="clear:both">
+<div id="chooseObj">
+	<input type="checkbox" name="obj1" value="person"> person<br>
+	<input type="checkbox" name="obj2" value="bottle"> bottle<br>
+	<input type="checkbox" name="obj3" value="chair"> chair<br>
+	<input type="checkbox" name="obj4" value="dining_table"> dining table<br>
+	<input type="checkbox" name="obj5" value="tv/monitor" > tv/ monitor<br><br>
+	<button onclick="changeVideo_low()" type="button">low 320x180</button><br>
+	<button onclick="changeVideo_mid()" type="button">mid 640x360</button><br>
+	<button onclick="changeVideo_high()" type="button">high 1280x720</button><br><br>
+	<button onclick="Forward()" type="button">>>5</button><br>
+	<button onclick="Backward()" type="button">&lt;&lt;5</button><br>
+</div>
+<script> 
+	function Forward(){
+		player.seek(player.time()+5);
+	}
+	function Backward(){
+		player.seek(player.time()-5);
+	}
+	
+	function changeVideo_low() {
+		player.pause();
+		player.reset();
+		player.attachView(view);
+		src = "./dash/mystream_low.mpd";
+		player.attachSource(src);
+		console.log(src);
+	}
+	function changeVideo_mid() {
+		player.pause();
+		player.reset();
+		player.attachView(view);
+		src = "./dash/mystream_mid.mpd";
+		player.attachSource(src);
+		console.log(src);
+	}
+	function changeVideo_high() {
+		player.pause();
+		player.reset();
+		player.attachView(view);
+		src = "./dash/mystream_high.mpd";
+		player.attachSource(src);
+		console.log(src);
+	}
+	// var btn_changeVideo = document.getElementById("myVideo");
+	
+	
+	//var content = new Dash.di.DashContent();
+	 var player = dashjs.MediaPlayer().create();
+	 var view = document.getElementById("myVideo");
+	 player.initialize();
+	 player.setBufferAheadToKeep(30);
+	 player.setBufferToKeep(30);
+	 player.setLiveDelay(10);
+	 player.setAutoPlay(false);
+	 player.attachView(view);
+	 src = "./dash/mystream_mid.mpd";
+	 player.attachSource(src);
+	
+	
+	
+	
+</script> 
+
+</body>
